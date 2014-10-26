@@ -42,10 +42,14 @@ Install manually:
   * Widget for latest events
   * Setting for monitor API key
 
+* **0.1.1 Small corrections**
+  * Small correction in README
+
 
 ## FAQ
 
 **Where do I get the API key?**  
+
 Go in UptimeRoboto to "My Settings" and click in the paragraph "Monitor-specific API Keys" on "Show/hide it". Search as next for the name of the desired website. Now you will see the API key for monitoring this website.  
 This API key you have to enter in the plugin settings of _UptimeRobotMonitor_.
 
