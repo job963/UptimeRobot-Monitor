@@ -1,0 +1,15 @@
+{
+    "name": "UptimeRobotMonitor",
+    "description": "Plugin for displaying <a href=\"http://uptimerobot.com/\" target=\"_blank\">UptimeRobot</a> data",
+    "version": "0.1.0",
+    "keywords": ["monitor", "system", "uptimerobot", "live"],
+    "homepage": "https://github.com/job963/UptimeRobot-Monitor",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Joachim Barthel",
+            "email": "jobarthel@gmail.com",
+            "homepage": "https://github.com/job963"
+        }
+    ]
+}
