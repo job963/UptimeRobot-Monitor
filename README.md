@@ -2,9 +2,9 @@
 
 ## Description
 
-This plugin shows data collected by UptimeRobot in Piwik. This helps you to see all information about your website in one system without having the need to login into several systems.
+This plugin shows data, collected by UptimeRobot, in Piwik. This helps you to see all information about your website in one system without having the need to login into several systems.
 
-The access to UptimeRobot will be managed by an individual API key, which you have to create in UptimeRobot.
+The access to UptimeRobot will be managed by an individual monitor API key, which you have to create in UptimeRobot (see FAQ).
 
 
 ## Screenshots
@@ -39,7 +39,8 @@ Install manually:
 ## Changelog
 
 * **0.1.0 Initial release**
-  * 
+  * Widget for latest events
+  * Setting for monitor API key
 
 
 ## FAQ
