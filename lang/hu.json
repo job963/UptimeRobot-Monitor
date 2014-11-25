@@ -1,0 +1,14 @@
+{
+    "UptimeRobotMonitor": {
+        "PluginDescription": "UptimeRobot Monitor: UptimeRobot adatokat megjelnítő bővítmény.",
+	"UptimeRobotMonitor": "UptimeRobot Monitor",
+	"widgetLiveLogList": "UptimeRobot - Legutóbbi Események",
+        "Event": "Esemény",
+        "DateTime": "Dátum/Idő",
+        "Duration": "Időtartam",
+        "SettingsDescription": "UptimeRobot Monitor beállítások",
+        "ApiKeyLabel": "Monitor API Kulcs",
+        "ApiKeyDescription": "Addja meg egy monitor API kulcsát"
+    }
+}
+
