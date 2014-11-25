@@ -45,6 +45,9 @@ Install manually:
 * **0.1.1 Small corrections**
   * Small correction in README
 
+* **0.1.2 New Language added**
+  * Now usable in hungarian language (thanks to sagikazarmark)
+
 
 ## FAQ
 
