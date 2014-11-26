@@ -48,6 +48,8 @@ Install manually:
 * **0.1.2 New Language added**
   * Now usable in hungarian language (thanks to sagikazarmark)
 
+* **0.1.3 Readme updated**
+  * New version description added
 
 ## FAQ
 
