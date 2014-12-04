@@ -6,9 +6,10 @@
         "Event": "Event",
         "DateTime": "Date/Time",
         "Duration": "Duration",
+	"widgetTimeBar": "UptimeRobot - Time Bar",
         "SettingsDescription": "Settings for Plugin UptimeRobot Monitor",
-        "ApiKeyLabel": "Monitor API Key",
-        "ApiKeyDescription": "Enter the API key for a specific monitor "
+        "ApiKeyLabel": "Monitor API Keys",
+        "ApiKeyDescription": "List of API keys for the monitors\n(each key in a new line)"
     }
 }
 

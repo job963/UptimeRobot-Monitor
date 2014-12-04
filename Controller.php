@@ -22,14 +22,23 @@ use Piwik\ViewDataTable\Factory as ViewDataTableFactory;
 
 class Controller extends \Piwik\Plugin\Controller
 {
+    protected $apiKey = '';
 
     /**
      * Container for the Live Log List widget
      **/
     function widgetLiveLogList()
     {
+        $settings = new Settings('UptimeRobotMonitor');
+        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
         $output = '';
-        $output .= $this->widgetLiveLogTable();
+        
+        foreach ($apiKeys as $index => $apiKey) {
+            $apiKey = trim($apiKey);
+            $monitorData = API::getInstance()->getMonitorData($apiKey);
+            $output .= '<div style="font-size:1.1em;font-weight:bold;background-color:#e0e0e0;padding:6px;" title="' . $monitorData->url . '">' . $monitorData->friendlyname . '</div>';
+            $output .= $this->widgetLiveLogTable($index, $apiKey);
+        }
 
         return $output;
     }
@@ -38,10 +47,11 @@ class Controller extends \Piwik\Plugin\Controller
     /**
      * This widget shows ...
      **/
-    function widgetLiveLogTable()
+    function widgetLiveLogTable($index, $apiKey)
     {
         $controllerAction = $this->pluginName . '.' . __FUNCTION__;
-        $apiAction = 'UptimeRobotMonitor.getLiveLogData';
+        $apiAction = 'UptimeRobotMonitor.getLiveLogData' . $index;
+        $this->apiKey = $apiKey;
 
         $view = ViewDataTableFactory::build('table', $apiAction, $controllerAction);
 	
@@ -61,6 +71,43 @@ class Controller extends \Piwik\Plugin\Controller
         $view->config->enable_sort = false;
         $view->config->show_search = false;
         
+        return $view->render();
+    }
+    
+    
+    /**
+     * Container for the TimeBars of all monitored servers
+     **/
+    function widgetTimeBar()
+    {
+        $settings = new Settings('UptimeRobotMonitor');
+        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $output = '';
+        
+        foreach ($apiKeys as $index => $apiKey) {
+            $apiKey = trim($apiKey);
+            $output .= $this->widgetTimeBarElement($apiKey);
+        }
+
+        return $output;
+    }
+    
+
+    /**
+     * This widget shows ...
+     **/
+    function widgetTimeBarElement($apiKey)
+    {
+        $monitorData = API::getInstance()->getMonitorData($apiKey);
+        $logData = API::getInstance()->getTimeBarData($apiKey);
+
+        $view = new View('@UptimeRobotMonitor/widgetTimeBarElement.twig');
+        $this->setBasicVariablesView($view);
+        $view->friendlyName = $monitorData->friendlyname;
+        $view->url = $monitorData->url;
+        $view->timeRange = array( 'start' => date("Y-m-d", strtotime('now')), 'end' => date("Y-m-d", strtotime('-14 days')) );
+        $view->timeBar = $logData;
+
         return $view->render();
     }
     

@@ -35,9 +35,7 @@ class Settings extends \Piwik\Plugin\Settings
     {
         $this->apiKey = new SystemSetting('apiKey', Piwik::translate('UptimeRobotMonitor_ApiKeyLabel') );
         $this->apiKey->readableByCurrentUser = true;
-        $this->apiKey->type  = static::TYPE_STRING;
-        $this->apiKey->uiControlType = static::CONTROL_TEXT;
-        $this->apiKey->uiControlAttributes = array('size' => 40);
+        $this->apiKey->uiControlType = static::CONTROL_TEXTAREA;
         $this->apiKey->description   = Piwik::translate('UptimeRobotMonitor_ApiKeyDescription');
 
         $this->addSetting($this->apiKey);

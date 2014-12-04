@@ -6,9 +6,10 @@
         "Event": "Ereignis",
         "DateTime": "Datum/Uhrzeit",
         "Duration": "Zeitdauer",
+	"widgetTimeBar": "UptimeRobot - Zeitleiste",
         "SettingsDescription": "Einstellungen für das Plugin UptimeRobot Monitor",
-        "ApiKeyLabel": "Monitor API Key",
-        "ApiKeyDescription": "API Key für einen speziellen Monitor"
+        "ApiKeyLabel": "Monitor API Keys",
+        "ApiKeyDescription": "Liste der API Keys für einzelnen Monitore\n(je ein Monitor pro Zeile eintragen)"
     }
 }
 

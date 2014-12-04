@@ -8,8 +8,11 @@ The access to UptimeRobot will be managed by an individual monitor API key, whic
 
 
 ## Screenshots
-**Widget-Preview**  
+**LogList Widget**  
 ![](https://github.com/job963/UptimeRobot-Monitor/raw/master/screenshots/widgetLogList.png)
+
+**TimeBar Widget**  
+![](https://github.com/job963/UptimeRobot-Monitor/raw/master/screenshots/widgetTimeBar.png)
 
 **Plugin Settings**  
 ![](https://github.com/job963/UptimeRobot-Monitor/raw/master/screenshots/SettingsDE.png)
@@ -50,6 +53,10 @@ Install manually:
 
 * **0.1.3 Readme updated**
   * New version description added
+
+* **0.2 Timebar widget added**
+  * New widget for displaying the log as a time bar
+  * Support of multiple servers
 
 ## FAQ
 

@@ -31,9 +31,13 @@ class UptimeRobotMonitor extends \Piwik\Plugin
     }
 
     
+    /**
+     * List of available Widgets
+     */
     public function  addWidgets()
     {
         WidgetsList::add('UptimeRobot Monitor', 'UptimeRobotMonitor_widgetLiveLogList', 'UptimeRobotMonitor', 'widgetLiveLogList');
+        WidgetsList::add('UptimeRobot Monitor', 'UptimeRobotMonitor_widgetTimeBar', 'UptimeRobotMonitor', 'widgetTimeBar');
     }
     
 }
