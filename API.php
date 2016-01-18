@@ -6,7 +6,7 @@
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  * 
- * @copyright (c) 2014, Joachim Barthel
+ * @copyright (c) 2014-2016, Joachim Barthel
  * @author Joachim Barthel <jobarthel@gmail.com>
  * @category Piwik_Plugins
  * @package UptimeRobotMonitor
@@ -14,6 +14,7 @@
 
 namespace Piwik\Plugins\UptimeRobotMonitor;
 
+use Piwik\Common;
 use Piwik\DataTable;
 
 
@@ -118,6 +119,44 @@ class API extends \Piwik\Plugin\API
 
         return $dataTable;
     }
+    
+
+    function getResponseTimesData($apiKey = '')
+    {
+        $url = "http://api.uptimerobot.com/getMonitors?apiKey={$apiKey}&responseTimes=1&format=json";
+        $encapString = "jsonUptimeRobotApi()";
+
+        $c = curl_init($url);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($c);
+        $response = substr( $response, strlen($encapString) - 1, strlen($response) - strlen($encapString) );
+        $aResponse = json_decode($response);
+        curl_close($c);
+
+        $aTimes = $aResponse->monitors->monitor[0]->responsetime;
+        
+        /*
+        $aData = array();
+        $aLog[0]->timediff = DATE( "z,G,i,s", strtotime(date("Y-m-d H:i:s")) - strtotime($aLog[0]->datetime) );
+        array_push($aData, array(
+                'type'     => $this->_transformType( $aLog[0]->type ),
+                'datetime' => $this->_transformDateTime( $aLog[0]->datetime ),
+                'timediff' => $this->_transformTimePeriod( $aLog[0]->timediff )
+            ));
+        for($i=1; $i<count($aLog); $i++) {
+            array_push($aData, array(
+                    'type'     => $this->_transformType( $aLog[$i]->type ),
+                    'datetime' => $this->_transformDateTime( $aLog[$i]->datetime ),
+                    'timediff' => $this->_transformTimePeriod( DATE( "z,G,i,s", strtotime($aLog[$i-1]->datetime) - strtotime($aLog[$i]->datetime) ) )
+                ));
+        }
+        
+        $dataTable = new DataTable();
+        $dataTable = DataTable::makeFromIndexedArray($aData);
+        */
+
+        return $dataTable;
+    }
 
     
     function getTimeBarData($apiKey = '')
@@ -133,29 +172,39 @@ class API extends \Piwik\Plugin\API
         curl_close($c);
         
         $aLog = $aResponse->monitors->monitor[0]->log;
+        //$aTimes = $aResponse->monitors->monitor[0]->reponsetime;
         
-        $watchTime = '-14 days';
+        $settings = new Settings('UptimeRobotMonitor');
+        $watchTime = '-' . $settings->monitorRange->getValue() . ' day';  // -nn days
+        
+        $endDate = Common::getRequestVar('date', false);
+        $startDate = date('Y-m-d', strtotime($watchTime, strtotime($endDate)));
+        $startDateTime = strtotime( $startDate . ' 00:00:00' );
+        $endDateTime = strtotime( $endDate . ' 23:59:59' );
+        $watchPeriod = $endDateTime - $startDateTime;
+        
         $aData = array();
-        $watchPeriod =  strtotime( 'now' ) - strtotime($watchTime);
         
-        $aLog[0]->timediff = strtotime(date("Y-m-d H:i:s")) - strtotime($aLog[0]->datetime);
-        array_push($aData, array(
-                'state'     => $aLog[0]->type,
-                'period' => min( $aLog[0]->timediff / $watchPeriod * 100.0, 100.0),
-                'timediff' => $this->_transformTimePeriod( DATE( "z,G,i,s", $aLog[0]->timediff) )
-            ));
+        $sumPeriods = 0.0;
+        for($i=0; $i<count($aLog); $i++) {
+            $aLog[$i]->starttime = strtotime($aLog[$i]->datetime);
+            if ($i == 0) {
+                $aLog[$i]->endtime = $endDateTime;
+            } else {
+                $aLog[$i]->endtime = strtotime($aLog[$i-1]->datetime);
+            }
         
-        for($i=1; $i<count($aLog); $i++) {
-            if ( (strtotime( 'now' ) - strtotime($aLog[$i-1]->datetime)) < $watchPeriod ) {
-                if ( (strtotime( 'now' ) - strtotime($aLog[$i]->datetime)) > $watchPeriod )
-                    $timePeriod = strtotime($aLog[$i-1]->datetime) - strtotime($watchTime);
-                else
-                    $timePeriod = strtotime($aLog[$i-1]->datetime) - strtotime($aLog[$i]->datetime);
+            if ( ( ($aLog[$i]->starttime <= $endDateTime) && ($aLog[$i]->starttime >= $startDateTime) ) 
+                    || ( ($aLog[$i]->endtime >= $startDateTime) && ($aLog[$i]->endtime <= $endDateTime) ) )  {
+                $timePeriod = $aLog[$i]->endtime - $aLog[$i]->starttime;
+                $remPeriods = 100.0 - $sumPeriods;
                 array_push($aData, array(
-                        'state'     => $aLog[$i]->type,
-                        'period' => min( ( $timePeriod ) / $watchPeriod * 100.0, 100.0 ),
+                        'start'    => date("Y-m-d, H:i:s", strtotime($aLog[$i]->datetime)),
+                        'state'    => $aLog[$i]->type,
+                        'period'   => min( $remPeriods, $timePeriod/$watchPeriod*100.0, 100.0 ),
                         'timediff' => $this->_transformTimePeriod( DATE( "z,G,i,s", strtotime($aLog[$i-1]->datetime) - strtotime($aLog[$i]->datetime) ) )
                     ));
+                $sumPeriods += min( ( $timePeriod ) / $watchPeriod * 100.0, 100.0 );
             }
         }
         

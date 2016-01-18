@@ -6,7 +6,7 @@
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  * 
- * @copyright (c) 2014, Joachim Barthel
+ * @copyright (c) 2014-2016, Joachim Barthel
  * @author Joachim Barthel <jobarthel@gmail.com>
  * @category Piwik_Plugins
  * @package UptimeRobotMonitor
@@ -15,6 +15,8 @@
 namespace Piwik\Plugins\UptimeRobotMonitor;
 
 use Piwik\API\Request;
+use Piwik\Common;
+use Piwik\Date;
 use Piwik\Piwik;
 use Piwik\View;
 use Piwik\ViewDataTable\Factory as ViewDataTableFactory;
@@ -81,12 +83,18 @@ class Controller extends \Piwik\Plugin\Controller
     function widgetTimeBar()
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        
+        $widgets = explode( "---", $settings->apiKeys->getValue() );
+        $widgetNo = Common::getRequestVar('id');
+        
+        $apiKeys  = explode( "\n", $widgets[$widgetNo] );
         $output = '';
         
         foreach ($apiKeys as $index => $apiKey) {
             $apiKey = trim($apiKey);
-            $output .= $this->widgetTimeBarElement($apiKey);
+            if (strlen($apiKey) > 5) {
+                $output .= $this->widgetTimeBarElement($apiKey);
+            }
         }
 
         return $output;
@@ -100,12 +108,17 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $monitorData = API::getInstance()->getMonitorData($apiKey);
         $logData = API::getInstance()->getTimeBarData($apiKey);
+        $settings = new Settings('UptimeRobotMonitor');
+        $watchTime = '-' . $settings->monitorRange->getValue() . ' day';
+
+        $dateStart = Common::getRequestVar('date', false);
+        $dateEnd = date('Y-m-d', strtotime($watchTime, strtotime($dateStart)));
 
         $view = new View('@UptimeRobotMonitor/widgetTimeBarElement.twig');
         $this->setBasicVariablesView($view);
         $view->friendlyName = $monitorData->friendlyname;
         $view->url = $monitorData->url;
-        $view->timeRange = array( 'start' => date("Y-m-d", strtotime('now')), 'end' => date("Y-m-d", strtotime('-14 days')) );
+        $view->timeRange = array( 'start' => $dateStart, 'end' => $dateEnd );
         $view->timeBar = $logData;
 
         return $view->render();

@@ -1,6 +1,6 @@
 {
     "UptimeRobotMonitor": {
-        "PluginDescription": "UptimeRobot Monitor: Plugin zur Anzeige von UptimeRobot Daten.",
+        "PluginDescription": "UptimeRobot Monitor: Plugin zur Anzeige von UptimeRobot Monitoring Daten.",
 	"UptimeRobotMonitor": "UptimeRobot Monitor",
 	"widgetLiveLogList": "UptimeRobot - Neueste Ereignisse",
         "Event": "Ereignis",
@@ -8,8 +8,19 @@
         "Duration": "Zeitdauer",
 	"widgetTimeBar": "UptimeRobot - Zeitleiste",
         "SettingsDescription": "Einstellungen für das Plugin UptimeRobot Monitor",
-        "ApiKeyLabel": "Monitor API Keys",
-        "ApiKeyDescription": "Liste der API Keys für einzelnen Monitore\n(je ein Monitor pro Zeile eintragen)"
+        "WidgetTitles": "Monitoring Widget-Titel",
+        "WidgetTitlesDescription": "Liste der Widgets/Titel",
+        "WidgetTitlesHelp": "Der Widget Titel ist die Überschrift des Widgets. Für jedes Widget jeweils eine Zeile eingeben.",
+        "MonitorRange": "Monitoring Zeitraum",
+        "MonitorRangeDescription": "Monitoring Zeitraum",
+        "MonitorRangeHelp": "Zeitraum, der angezeigt werden soll",
+        "Range2Days": "2 Tage",
+        "Range7Days": "7 Tage",
+        "Range14Days": "14 Tage",
+        "Range30Days": "30 Tage",
+        "ApiKeysLabel": "Monitor API Keys",
+        "ApiKeysDescription": "Liste der API Keys für einzelnen Monitore",
+        "ApiKeysHelp": "Liste der API Keys für einzelnen Monitore. Jeden Monitor in eine Zeile eintragen und die Gruppierung je Widget mit einer Zeile, die den Text --- enthält, trennen"
     }
 }
 

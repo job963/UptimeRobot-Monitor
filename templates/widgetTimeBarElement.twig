@@ -1,11 +1,11 @@
 {# Twig template for UptimeRobotMonitor / TimeBarElement #}
 
 <div style="margin:15px;">
-    <div style="font-size:1.1em;font-weight:bold;margin-bottom:4px;" title="{{url}}">{{friendlyName}}</div>
+    <div style="font-size:1.1em; font-weight:bold; margin-bottom:4px;" title="{{url}}">{{friendlyName}}</div>
     <table style="width:100%; border-collapse:collapse;">
         <tr>
-            <td style="text-align:left;font-size:0.85em;">{{timeRange.end}}</td>
-            <td style="text-align:right;font-size:0.85em;">{{timeRange.start}}</td>
+            <td style="text-align:left; font-size:0.85em;">{{timeRange.end}}</td>
+            <td style="text-align:right; font-size:0.85em;">{{timeRange.start}}</td>
         </tr>
     </table>
     <table style="width:100%; border-collapse:collapse;">
@@ -14,11 +14,14 @@
             {% if timePeriod.state == 2 %}
                 {% set cellColor = "#28a428" %}
                 {% set cellState = "UP" %}
-            {% else%}
+            {% elseif timePeriod.state == 1 %}
                 {% set cellColor = "#d62929" %}
                 {% set cellState = "DOWN" %}
+            {% else %}
+                {% set cellColor = "#ffdd00" %}
+                {% set cellState = "UNKNOWN" %}
             {% endif %}
-            <td style="width:{{timePeriod.period}}%; background-color:{{cellColor}};" title="{{timePeriod.timediff}}"></td>
+            <td style="width:{{timePeriod.period}}%; background-color:{{cellColor}};" title="{{timePeriod.start}}{{"\n"}}{{timePeriod.timediff}}"></td>
         {% endfor %}    
     </tr>
     </table>
