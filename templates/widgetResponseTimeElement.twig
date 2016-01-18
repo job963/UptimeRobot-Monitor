@@ -1,0 +1,26 @@
+{# Twig template for UptimeRobotMonitor / TimeBarElement #}
+
+<div style="margin:15px;">
+    <div style="font-size:1.1em;font-weight:bold;margin-bottom:4px;" title="{{url}}">{{friendlyName}}</div>
+    <table style="width:100%; border-collapse:collapse;">
+        <tr>
+            <td style="text-align:left;font-size:0.85em;">{{timeRange.end}}</td>
+            <td style="text-align:right;font-size:0.85em;">{{timeRange.start}}</td>
+        </tr>
+    </table>
+    <table style="width:100%; border-collapse:collapse;">
+    <tr style="height:14px;">
+        {% for timePeriod in timeBar|reverse %}
+            {% if timePeriod.state == 2 %}
+                {% set cellColor = "#28a428" %}
+                {% set cellState = "UP" %}
+            {% else%}
+                {% set cellColor = "#d62929" %}
+                {% set cellState = "DOWN" %}
+            {% endif %}
+            <td style="width:{{timePeriod.period}}%; background-color:{{cellColor}};" title="{{timePeriod.timediff}}"></td>
+        {% endfor %}    
+    </tr>
+    </table>
+    <div style="height:1.0em;"> </div>
+</div>
