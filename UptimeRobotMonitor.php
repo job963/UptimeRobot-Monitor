@@ -17,7 +17,6 @@ namespace Piwik\Plugins\UptimeRobotMonitor;
 use Piwik\Piwik;
 use Piwik\WidgetsList;
 
-
 class UptimeRobotMonitor extends \Piwik\Plugin
 {
 

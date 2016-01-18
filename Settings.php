@@ -58,7 +58,6 @@ class Settings extends \Piwik\Plugin\Settings
                     '7' => Piwik::translate('UptimeRobotMonitor_Range7Days'), 
                     '14' => Piwik::translate('UptimeRobotMonitor_Range14Days'), 
                     '30' => Piwik::translate('UptimeRobotMonitor_Range30Days') );
-        //$this->monitorRange->description   = Piwik::translate('UptimeRobotMonitor_MonitorRangeDescription');
         $this->monitorRange->inlineHelp    = Piwik::translate('UptimeRobotMonitor_MonitorRangeHelp');
 
         $this->addSetting($this->monitorRange);

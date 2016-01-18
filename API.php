@@ -77,9 +77,6 @@ class API extends \Piwik\Plugin\API
         $response = substr( $response, strlen($encapString) - 1, strlen($response) - strlen($encapString) );
         $aResponse = json_decode($response);
         curl_close($c);
-        /*echo '<pre>';
-        print_r($aResponse->monitors->monitor[0]);
-        echo '</pre>';*/
         
         return $aResponse->monitors->monitor[0];
     }

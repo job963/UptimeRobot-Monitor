@@ -102,7 +102,7 @@ class Controller extends \Piwik\Plugin\Controller
     
 
     /**
-     * This widget shows ...
+     * This widget shows one timebar (for one monitor)
      **/
     function widgetTimeBarElement($apiKey)
     {

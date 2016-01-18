@@ -1,6 +1,6 @@
 {
     "UptimeRobotMonitor": {
-        "PluginDescription": "UptimeRobot Monitor: Plugin zur Anzeige von UptimeRobot Monitoring Daten.",
+        "PluginDescription": "UptimeRobot Monitor: Plugin zur Anzeige von UptimeRobot Monitoring Daten als Widgets.",
 	"UptimeRobotMonitor": "UptimeRobot Monitor",
 	"widgetLiveLogList": "UptimeRobot - Neueste Ereignisse",
         "Event": "Ereignis",

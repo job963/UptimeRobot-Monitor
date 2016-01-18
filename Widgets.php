@@ -31,6 +31,5 @@ class Widgets extends \Piwik\Plugin\Widgets
             $this->addWidget($widgetTitle, 'widgetTimeBar', $params);
         }
     }
-    
 
 }
