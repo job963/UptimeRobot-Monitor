@@ -21,7 +21,7 @@ class Widgets extends \Piwik\Plugin\Widgets
 
     protected function init()
     {
-        $this->addWidget('UptimeRobotMonitor_widgetLiveLogList', 'UptimeRobotMonitor_widgetLiveLogList');
+        $this->addWidget('UptimeRobotMonitor_widgetLiveLogList', 'widgetLiveLogList');
         
         $settings = new Settings('UptimeRobotMonitor');
         $widgetTitles  = explode( "\n", $settings->widgetTitles->getValue() );

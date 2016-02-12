@@ -32,7 +32,7 @@ class Controller extends \Piwik\Plugin\Controller
     function widgetLiveLogList()
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $apiKeys  = explode( "\n", $settings->apiKeys->getValue() );
         $output = '';
         
         foreach ($apiKeys as $index => $apiKey) {

@@ -24,7 +24,7 @@ class API extends \Piwik\Plugin\API
     function getLiveLogData0($idSite)
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $apiKeys  = explode( "\n", $settings->apiKeys->getValue() );
         $apiKey = trim($apiKeys[0]);
         return $this->getLiveLogData($apiKey);
     }
@@ -33,7 +33,7 @@ class API extends \Piwik\Plugin\API
     function getLiveLogData1($idSite)
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $apiKeys  = explode( "\n", $settings->apiKeys->getValue() );
         $apiKey = trim($apiKeys[1]);
         return $this->getLiveLogData($apiKey);
     }
@@ -42,7 +42,7 @@ class API extends \Piwik\Plugin\API
     function getLiveLogData2($idSite)
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $apiKeys  = explode( "\n", $settings->apiKeys->getValue() );
         $apiKey = trim($apiKeys[2]);
         return $this->getLiveLogData($apiKey);
     }
@@ -51,7 +51,7 @@ class API extends \Piwik\Plugin\API
     function getLiveLogData3($idSite)
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $apiKeys  = explode( "\n", $settings->apiKeys->getValue() );
         $apiKey = trim($apiKeys[3]);
         return $this->getLiveLogData($apiKey);
     }
@@ -60,7 +60,7 @@ class API extends \Piwik\Plugin\API
     function getLiveLogData4($idSite)
     {
         $settings = new Settings('UptimeRobotMonitor');
-        $apiKeys  = explode( "\n", $settings->apiKey->getValue() );
+        $apiKeys  = explode( "\n", $settings->apiKeys->getValue() );
         $apiKey = trim($apiKeys[4]);
         return $this->getLiveLogData($apiKey);
     }
@@ -199,7 +199,7 @@ class API extends \Piwik\Plugin\API
                         'start'    => date("Y-m-d, H:i:s", strtotime($aLog[$i]->datetime)),
                         'state'    => $aLog[$i]->type,
                         'period'   => min( $remPeriods, $timePeriod/$watchPeriod*100.0, 100.0 ),
-                        'timediff' => $this->_transformTimePeriod( DATE( "z,G,i,s", strtotime($aLog[$i-1]->datetime) - strtotime($aLog[$i]->datetime) ) )
+                        'timediff' => $this->_transformTimePeriod( $aLog[$i]->endtime - $aLog[$i]->starttime )
                     ));
                 $sumPeriods += min( ( $timePeriod ) / $watchPeriod * 100.0, 100.0 );
             }
@@ -231,7 +231,8 @@ class API extends \Piwik\Plugin\API
     
     function _transformTimePeriod($timePeriod)
     {
-        $aTimes = explode( ',', $timePeriod );
+        $timeString = DATE( "z,G,i,s", $timePeriod );
+        $aTimes = explode( ',', $timeString );
         foreach ($aTimes as $key => $value) {
             $aTimes[$key] = (int)$value;
         }
